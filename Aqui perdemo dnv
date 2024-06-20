@@ -35,3 +35,79 @@ for linha in triangulo_pascal(6):
 #b)
 
 # A complexidade de tempo é O(n²).
+
+
+
+
+#Questão 4:
+
+def polynomial(poly):
+    coefficients = {}
+    
+    # Step 1: Clean up the polynomial string
+    poly = poly.replace('-', '+-')
+    poly = poly.replace(' ', '')  # Remove spaces
+    
+    # Step 2: Split the polynomial into terms
+    if '+' in poly:
+        poly = poly.split('+')
+    else:
+        poly = [poly]  # If there's no '+', it's a single term
+    
+    # Step 3: Parse each term and extract coefficients
+    if len(poly) == 1 and poly[0] == '':
+        return "p(x) = 0, for all x"
+    
+    for term in poly:
+        if term == '':
+            continue
+        
+        if 'x' in term:
+            if '^' in term:
+                # Term of the form 'ax^n'
+                coef, power = term.split('x^')
+                if coef == '':
+                    coef = '1'  # If coef is empty, it means it's '1x^n'
+                coefficients[int(power)] = int(coef)
+            elif 'x' in term:
+                # Term of the form 'ax' (which is the same as 'ax^1')
+                coef = term.replace('x', '')
+                if coef == '' or coef == '+':
+                    coef = '1'  # If coef is empty or just '+', it means it's '1x'
+                coefficients[1] = int(coef)
+        else:
+            # Term of the form 'a' (constant term)
+            coefficients[0] = int(term)
+
+    return coefficients
+
+# Test the function with example input
+print(polynomial("x^2 +x"))  # Output: {2: 1, 1: 1}
+
+
+
+def polynomial(poly):
+    coefficients = {}
+    poly = poly.replace('-', '+-')
+    poly = poly.replace(' ', '')
+    if '+' in poly:
+        poly = poly.split('+')
+    else:
+        poly = [poly]
+    if len(poly) == 1 and poly[0] == '':
+        return "p(x) = 0 for all x"
+    for term in poly:
+        if term == '':
+            continue
+    for 'x' in term:
+        if '^' in term:
+            coef, power = 'x^'
+            if coef = '':
+                coef = '1'
+            coefficients[int(power)] = int(coef)    
+            elif 'x' in term:
+                coef = term.replace('x', '')
+                if coef == '' or coef == +:
+                    coef = '1'
+
+polynomial("x^2 +x")
