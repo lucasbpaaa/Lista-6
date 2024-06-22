@@ -37,9 +37,77 @@ for linha in triangulo_pascal(6):
 # A complexidade de tempo é O(n²).
 
 
+#Question 3:
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class LinkedList:
+    def __init__(self, head=None):
+        self.head = head
+        self.length = self.calculate_length()
+    
+    def calculate_length(self):
+        current = self.head
+        length = 0
+        while current:
+            length += 1
+            current = current.next
+        return length
+    
+    def delete_node(self, target):
+        if not self.head:
+            return
+        
+        prev = None
+        current = self.head
+        
+        while current:
+            if current.val == target:
+                if prev:
+                    prev.next = current.next
+                else:
+                    self.head = current.next
+                self.length -= 1
+            else:
+                prev = current
+            current = current.next
+    
+    def __add__(self, other_list):
+        # Concatenando duas listas encadeadas
+        if not self.head:
+            return other_list
+        
+        current = self.head
+        while current.next:
+            current = current.next
+        
+        current.next = other_list.head
+        self.length += other_list.length
+        
+        return self
+    
+    def __str__(self):
+        if not self.head:
+            return "LinkedList: empty"
+        
+        current = self.head
+        result = "LinkedList: "
+        while current:
+            result += str(current.val) + " -> "
+            current = current.next
+        result += "None"
+        return result
+
+#Análise de complexidade:
+# __init__: O(n) por causa do cálculo do comprimento.
+# delete_node : O(n) já que precisamos percorrer toda a lista para encontrar e remover os nós com o valor alvo.
+#__add__ : O(m) , onde m é o número de nós na segunda lista, pois precisamos encontrar o último nó da primeira lista para anexar a segunda lista.
 
 
-#Questão 4:
+#Question 4:
 
 def polynomial(poly):
     coefficients = {}
@@ -93,6 +161,7 @@ def polynomial(poly):
     
     return coefficients
 polynomial('2x^3+3x^2-4x+5')
+
 
 #Question 5:
 
