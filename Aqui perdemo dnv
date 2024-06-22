@@ -93,3 +93,52 @@ def polynomial(poly):
     
     return coefficients
 polynomial('2x^3+3x^2-4x+5')
+
+#Question 5:
+
+def dict_poly(poly_dict):
+   #Vamos ordenar os graus do polinômio em ordem decrescente
+    sorted_degrees = sorted(poly_dict.keys(), reverse = True)
+    terms = []
+    for degree in sorted_degrees:
+        coefficient = poly_dict[degree]
+        if coefficient == 0:
+            continue
+        
+        if degree == 0:
+            # Termo constante
+            if coefficient > 0 and len(terms) > 0:
+                terms.append(f"+{coefficient}")
+            else:
+                terms.append(f"{coefficient}")
+        elif degree == 1:
+            # Termo linear
+            if coefficient == 1:
+                terms.append("+x")
+            elif coefficient == -1:
+                terms.append("-x")
+            elif coefficient > 0 and len(terms) > 0:
+                terms.append(f"+{coefficient}x")
+            else:
+                terms.append(f"{coefficient}x")
+        else:
+            # Termos de grau maior que 1
+            if coefficient == 1:
+                terms.append(f"+x^{degree}")
+            elif coefficient == -1:
+                terms.append(f"-x^{degree}")
+            elif coefficient > 0 and len(terms) > 0:
+                terms.append(f"+{coefficient}x^{degree}")
+            else:
+                terms.append(f"{coefficient}x^{degree}")
+    
+# Junta todos os termos em uma única string
+    polynomial_str = ''.join(terms)
+    
+# Remove o sinal de "+" redundante no início, se houver
+    if polynomial_str[0] == '+':
+        polynomial_str = polynomial_str[1:]
+    return polynomial_str
+
+poly_dict = {2: 1, 1: -2, 0: 3}
+dict_poly(poly_dict)
