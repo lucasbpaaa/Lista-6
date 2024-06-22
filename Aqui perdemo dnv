@@ -44,70 +44,52 @@ for linha in triangulo_pascal(6):
 def polynomial(poly):
     coefficients = {}
     
-    # Step 1: Clean up the polynomial string
-    poly = poly.replace('-', '+-')
-    poly = poly.replace(' ', '')  # Remove spaces
+    # Remove espaços em branco e substituir '−' por '-'
+    poly = poly.replace(' ', '')
     
-    # Step 2: Split the polynomial into terms
-    if '+' in poly:
-        poly = poly.split('+')
-    else:
-        poly = [poly]  # If there's no '+', it's a single term
+    # Dividir o polinômio em termos
+    terms = []
+    current_term = ''
     
-    # Step 3: Parse each term and extract coefficients
-    if len(poly) == 1 and poly[0] == '':
-        return "p(x) = 0, for all x"
+    # Loop para separar os termos
+    i = 0
+    while i < len(poly):
+        if poly[i] == '+' or poly[i] == '-':
+            # Adiciona o termo atual à lista de termos
+            if current_term != '':
+                terms.append(current_term)
+            # Inicia um novo termo com o sinal
+            current_term = poly[i]
+        else:
+            # Continua a construir o termo atual
+            current_term += poly[i]
+        i += 1
     
-    for term in poly:
-        if term == '':
-            continue
-        
+    # Adiciona o último termo à lista de termos
+    if current_term != '':
+        terms.append(current_term)
+    
+    # Processa cada termo para extrair coeficiente e grau
+    for term in terms:
         if 'x' in term:
             if '^' in term:
-                # Term of the form 'ax^n'
                 coef, power = term.split('x^')
-                if coef == '':
-                    coef = '1'  # If coef is empty, it means it's '1x^n'
-                coefficients[int(power)] = int(coef)
-            elif 'x' in term:
-                # Term of the form 'ax' (which is the same as 'ax^1')
-                coef = term.replace('x', '')
                 if coef == '' or coef == '+':
-                    coef = '1'  # If coef is empty or just '+', it means it's '1x'
+                    coef = '1'
+                coefficients[int(power)] = int(coef)
+            else:
+                if term == 'x':
+                    coef = '1'
+                elif term == '-x':
+                    coef = '-1'
+                else:
+                    coef = term.replace('x', '')
+                    if coef == '' or coef == '+':
+                        coef = '1'
                 coefficients[1] = int(coef)
         else:
-            # Term of the form 'a' (constant term)
+            # Termo constante
             coefficients[0] = int(term)
-
+    
     return coefficients
-
-# Test the function with example input
-print(polynomial("x^2 +x"))  # Output: {2: 1, 1: 1}
-
-
-
-def polynomial(poly):
-    coefficients = {}
-    poly = poly.replace('-', '+-')
-    poly = poly.replace(' ', '')
-    if '+' in poly:
-        poly = poly.split('+')
-    else:
-        poly = [poly]
-    if len(poly) == 1 and poly[0] == '':
-        return "p(x) = 0 for all x"
-    for term in poly:
-        if term == '':
-            continue
-    for 'x' in term:
-        if '^' in term:
-            coef, power = 'x^'
-            if coef = '':
-                coef = '1'
-            coefficients[int(power)] = int(coef)    
-            elif 'x' in term:
-                coef = term.replace('x', '')
-                if coef == '' or coef == +:
-                    coef = '1'
-
-polynomial("x^2 +x")
+polynomial('2x^3+3x^2-4x+5')
